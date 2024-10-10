@@ -110,7 +110,9 @@ const Add_OPD_Form = ({ navigation }) => {
       feesAmount: parseFloat(feesAmount), // Ensure feesAmount is a number
       treatmentPlan,
       reasonForVisit,
+      prescriptions: medicines, // Include the medicines list in the data
     };
+    console.log("Data to send:",medicines);
     console.log("Data to send:", JSON.stringify(dataToSend));
     fetch(`${config.BASE_URL}/adnya/register/opd`, {
       method: 'POST',
@@ -128,6 +130,7 @@ const Add_OPD_Form = ({ navigation }) => {
         setReasonForVisit('');
         setFeesAmount('');
         setPatientDetails(null);
+        setMedicines([]); // Reset medicines to an empty array
       })
       .catch(error => {
         Alert.alert('Error', 'Failed to save OPD data');
@@ -285,9 +288,7 @@ const Add_OPD_Form = ({ navigation }) => {
         </TouchableOpacity>
 
 
-        <TouchableOpacity style={styles.button} onPress={handleRegister}>
-          <Text style={styles.buttonText}>Register .... OPD</Text>
-        </TouchableOpacity>
+      
       </View>
 
  {/* History Modal */}
@@ -428,6 +429,10 @@ const Add_OPD_Form = ({ navigation }) => {
               <TouchableOpacity style={styles.button} onPress={addPrescription}>
                 <Text style={styles.buttonText}>Add Prescription</Text>
               </TouchableOpacity>
+
+              <TouchableOpacity style={styles.button} onPress={handleRegister}>
+          <Text style={styles.buttonText}>Register .... OPD</Text>
+        </TouchableOpacity>
 
               <Pressable style={styles.modalCloseButton} onPress={closePrescriptionModal}>
                 <Text style={styles.modalCloseButtonText}>Close</Text>
