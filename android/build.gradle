@@ -10,11 +10,20 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+      
     }
     dependencies {
-        classpath("com.android.tools.build:gradle")
+         classpath("com.android.tools.build:gradle") // Use a compatible version
+    classpath("com.facebook.react:react-native-gradle-plugin")
+    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
+      /*  classpath("com.tom_roush:pdfbox-android:1.8.10.3") {
+        exclude group: "org.bouncycastle" // Exclude the bcpkix dependency
+    }
+    classpath("com.android.tools.build:gradle")
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
+         //  classpath("com.tom_roush:pdfbox-android:1.8.9.2") // Or another stable version
+         */
     }
 }
 

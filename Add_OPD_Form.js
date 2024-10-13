@@ -4,6 +4,13 @@ import { StyleSheet, Text, View, TextInput, Alert, ScrollView, Dimensions, Touch
 import { UserContext } from './UserContext';
 import { DataTable } from 'react-native-paper';
 import config from './my_con';
+//import RNHTMLtoPDF from 'rn-html-to-pdf';
+import RNHTMLtoPDF from 'react-native-html-to-pdf';
+import FileViewer from 'react-native-file-viewer';
+import { PermissionsAndroid, Platform } from 'react-native';
+
+
+
 const Add_OPD_Form = ({ navigation }) => {
   const { user_id } = useContext(UserContext); 
   const [patientId, setPatientId] = useState('');
@@ -124,6 +131,12 @@ const Add_OPD_Form = ({ navigation }) => {
       .then(response => response.json())
       .then(data => {
         Alert.alert('Success', 'OPD data saved successfully');
+      //  generatePDF(data);
+     
+      
+      
+
+      generatePDF(data); // Call the PDF generation function
         setPatientId('');
         setFindings('');
         setTreatmentPlan('');
@@ -131,11 +144,216 @@ const Add_OPD_Form = ({ navigation }) => {
         setFeesAmount('');
         setPatientDetails(null);
         setMedicines([]); // Reset medicines to an empty array
+        setPrescriptionModalVisible(false);
+       
+
+        
       })
       .catch(error => {
         Alert.alert('Error', 'Failed to save OPD data');
       });
   };
+
+/************ pdf */
+const generatePDF = async (data) => {
+/********************** */
+//try {
+
+  const response = await fetch(`http://192.168.1.114:8082/adnya/search/doctor?doctor_id=${data.doctorId}`, {
+    method: 'GET', // or 'POST' if your API requires it
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+
+  const dr_data = await response.json();
+  console.log("Dr Data",dr_data); // Process the data as needed
+  const doctorname = dr_data.doctor_name; 
+  const doctorregno =dr_data.doctor_reg_no;
+  const doctorothinfo =dr_data.doctor_oth_info;
+  const doctordg =dr_data.doctor_dg;
+  console.log("--------",doctorname); // Process the data as needed
+//} catch (error) {
+ // console.error('There was a problem with the fetch operation:', error);
+//}
+/************** */
+
+  const htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin: 20px;
+            padding: 20px;
+            border: 2px solid #000;
+        }
+        .header {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .doctor-info, .patient-info {
+            margin-bottom: 15px;
+        }
+        .doctor-info td, .patient-info td {
+            padding: 5px 10px;
+        }
+        .prescription-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .prescription-table, .prescription-table th, .prescription-table td {
+            border: 1px solid #000;
+        }
+        .prescription-table th, .prescription-table td {
+            padding: 10px;
+            text-align: left;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">Doctor's Prescription</div>
+
+        <table class="prescription-table">
+            <tr>
+                <td><strong>Doctor Name:</strong> ${doctorname}</td>
+                <td align="right"><strong>Doctor ID:</strong> ${data.doctorId}</td>
+            </tr>
+            <tr>
+                <td><strong>Degree:</strong> ${doctordg}</td>
+                <td align="right"><strong>Reg No.:</strong> ${doctorregno}</td>
+            </tr>
+            <tr>
+                <td colspan="2"><strong>Other Info:</strong> ${doctorothinfo}</td>
+            </tr>
+        </table>
+         <hr>
+        <table class="prescription-table">
+            <tr>
+                <td><strong>Patient ID:</strong> ${data.patientId}</td>
+                <td align="right"><strong>Date:</strong> ${new Date().toLocaleDateString()}</td>
+            </tr>
+        </table>
+         <hr>
+        <h3>Prescription</h3>
+        <table class="prescription-table">
+            <thead>
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Medicine Name</th>
+                    <th>Dosage/Instruction</th>
+                    <th>No. oF Dys</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${medicines.map((med, index) => `
+                <tr>
+                 <td>${index + 1}</td> <!-- Serial number -->
+                    <td>${med.medicineName}</td>
+                    <td> ${med.dosage}
+                    <p>${med.instructions}</p>
+                    <th> (${med.noOfDays} days)</th>
+                    </td>
+                  
+                                       
+                </tr>`).join('')}
+            </tbody>
+        </table>
+
+        <div class="footer">
+            <p>Please follow the dosage as prescribed and consult the doctor for any side effects or queries.</p>
+            <p>Signature: ______________________</p>
+        </div>
+    </div>
+</body>
+</html>
+
+  `;
+  const permissionGranted = await requestStoragePermission();
+  if (!permissionGranted) {
+    Alert.alert('Error', 'Storage permission is required to save the PDF.');
+    return;
+  }
+  // Generate PDF
+  let options = {
+    html: htmlContent,
+    fileName: 'Patient_OPD_Details',
+    directory: 'Download',
+  };
+
+  let file = await RNHTMLtoPDF.convert(options);
+  Alert.alert('PDF Generated', `PDF saved at: ${file.filePath}`);
+ /* FileViewer.open(file.filePath, { showOpenWithDialog: true, mimeType: 'application/pdf' })
+  .then(() => {
+    console.log('File opened successfully');
+  })
+  .catch((error) => {
+    console.error('Error opening file:', error);
+    Alert.alert('Error', 'Unable to open the PDF.');
+  });*/
+ /* const OpenFile = require('react-native-open-file');  // Add package to open files
+  OpenFile.openDoc([{
+    url: `file://${file.filePath}`,  // The file path
+    fileName: 'Patient_OPD_Details',
+    fileType: 'pdf',
+    cache: false
+  }], (error, url) => {
+    if (error) {
+      console.error(error);
+    } else {
+      console.log('File URL:', url);
+    }
+  });
+*/
+  // WhatsApp Share (optional)
+  //const whatsappURL = `https://api.whatsapp.com/send?text=Prescription PDF generated. You can find it here: ${file.filePath}`;
+  //Linking.openURL(whatsappURL);
+
+
+  
+};
+
+
+/************ end Pdf*/
+
+/*************search Doctor********** */
+const searchDoctor = async (doctor_id) => {
+  try {
+    const response = await fetch(`http://192.168.1.114:8082/adnya/search/doctor?doctor_id=${doctor_id}`, {
+      method: 'GET', // or 'POST' if your API requires it
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+    console.log(data); // Process the data as needed
+  } catch (error) {
+    console.error('There was a problem with the fetch operation:', error);
+  }
+};
+/*************search Doctor end***** */
 
   const [isHistoryVisible, setIsHistoryVisible] = useState(false);
 
@@ -198,7 +416,29 @@ const Add_OPD_Form = ({ navigation }) => {
     setPrescriptionModalVisible(false);
   };
 
- 
+  
+  async function requestStoragePermission() {
+    if (Platform.OS === 'android') {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          {
+            title: 'Storage Permission',
+            message: 'This app needs access to your storage to save PDF files.',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
+          }
+        );
+        return granted === PermissionsAndroid.RESULTS.GRANTED;
+      } catch (err) {
+        console.warn(err);
+        return false;
+      }
+    }
+    return true;
+  }
+  
 
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContent}>
