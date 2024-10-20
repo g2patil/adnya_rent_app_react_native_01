@@ -7,9 +7,9 @@ import config from './my_con';
 //import RNHTMLtoPDF from 'rn-html-to-pdf';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import FileViewer from 'react-native-file-viewer';
-import { PermissionsAndroid, Platform } from 'react-native';
-
-
+import { PermissionsAndroid, Platform,Linking} from 'react-native';
+import Share from 'react-native-share';
+import SendIntentAndroid from 'react-native-send-intent';
 
 const Add_OPD_Form = ({ navigation }) => {
   const { user_id } = useContext(UserContext); 
@@ -159,7 +159,7 @@ const generatePDF = async (data) => {
 /********************** */
 //try {
 
-  const response = await fetch(`http://192.168.1.114:8082/adnya/search/doctor?doctor_id=${data.doctorId}`, {
+  const response = await fetch(`${config.BASE_URL}/adnya/search/doctor?doctor_id=${data.doctorId}`, {
     method: 'GET', // or 'POST' if your API requires it
     headers: {
       'Content-Type': 'application/json',
@@ -286,45 +286,56 @@ const generatePDF = async (data) => {
 </html>
 
   `;
-  const permissionGranted = await requestStoragePermission();
+ /* const permissionGranted = await requestStoragePermission();
   if (!permissionGranted) {
     Alert.alert('Error', 'Storage permission is required to save the PDF.');
     return;
-  }
+  }*/
   // Generate PDF
   let options = {
     html: htmlContent,
-    fileName: 'Patient_OPD_Details',
+    fileName: 'Patient_prescription',
     directory: 'Download',
   };
 
   let file = await RNHTMLtoPDF.convert(options);
   Alert.alert('PDF Generated', `PDF saved at: ${file.filePath}`);
- /* FileViewer.open(file.filePath, { showOpenWithDialog: true, mimeType: 'application/pdf' })
-  .then(() => {
-    console.log('File opened successfully');
+
+
+  sendWhatsAppMessage('9960059223', 'Hello G2, this is a test message!');
+
+  const patientMobileNumber = '9503605749'; // Replace with the patient's mobile number
+  const pdfFilePath = `${file.filePath}`; // Path to your PDF file
+
+/*
+  const message = `Hello, please find the attached PDF.`;
+    
+  // WhatsApp URL format
+  const whatsappURL = `whatsapp://send?phone=${patientMobileNumber}&text=${encodeURIComponent(message)} ${pdfFilePath}`;
+
+ //  Attempt to share the PDF file with WhatsApp
+  Share.open({
+    url: whatsappURL,
+    title: 'Send PDF',
   })
-  .catch((error) => {
-    console.error('Error opening file:', error);
-    Alert.alert('Error', 'Unable to open the PDF.');
-  });*/
- /* const OpenFile = require('react-native-open-file');  // Add package to open files
-  OpenFile.openDoc([{
-    url: `file://${file.filePath}`,  // The file path
-    fileName: 'Patient_OPD_Details',
-    fileType: 'pdf',
-    cache: false
-  }], (error, url) => {
-    if (error) {
-      console.error(error);
-    } else {
-      console.log('File URL:', url);
-    }
-  });
+    .then((res) => console.log('Share response:', res))
+    .catch((err) => err && console.log('Error:', err));
+
 */
-  // WhatsApp Share (optional)
-  //const whatsappURL = `https://api.whatsapp.com/send?text=Prescription PDF generated. You can find it here: ${file.filePath}`;
-  //Linking.openURL(whatsappURL);
+
+
+  const shareOptions = {
+    title: 'Share PDF',
+    url: `file://${file.filePath}`, // Ensure the URL starts with 'file://'
+    type: 'application/pdf',
+    social: Share.Social.WHATSAPP,
+  };
+
+  Share.open(shareOptions)
+    .then((res) => console.log('Share response:', res))
+    .catch((err) => err && console.log('Error:', err));
+ 
+ 
 
 
   
@@ -333,10 +344,40 @@ const generatePDF = async (data) => {
 
 /************ end Pdf*/
 
+/*****************sendmessage********* */
+
+const sendWhatsAppMessage = (phoneNumber, message) => {
+  // Remove any non-numeric characters from the phone number
+  const cleanedPhoneNumber = phoneNumber.replace(/[^0-9]/g, '');
+
+  // Construct WhatsApp URL
+  const whatsappURL = `whatsapp://send?phone=${cleanedPhoneNumber}&text=${encodeURIComponent(message)}`;
+
+  // Check if WhatsApp is installed
+  Linking.canOpenURL(whatsappURL)
+    .then((supported) => {
+      if (!supported) {
+        Alert.alert('WhatsApp is not installed on this device.');
+      } else {
+        // Open WhatsApp
+        return Linking.openURL(whatsappURL);
+      }
+    })
+    .catch((err) => {
+      console.error('Error:', err);
+    });
+};
+
+// Example Usage
+
+
+
+
+/****************************** */
 /*************search Doctor********** */
 const searchDoctor = async (doctor_id) => {
   try {
-    const response = await fetch(`http://192.168.1.114:8082/adnya/search/doctor?doctor_id=${doctor_id}`, {
+    const response = await fetch(`${config.BASE_URL}/adnya/search/doctor?doctor_id=${doctor_id}`, {
       method: 'GET', // or 'POST' if your API requires it
       headers: {
         'Content-Type': 'application/json',

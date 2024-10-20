@@ -30,7 +30,7 @@
     
         // Add your registration logic here
 
-         fetch('http://192.168.1.114:8082/adnya/register/bldg', {
+         fetch( `${config.BASE_URL}/adnya/register/bldg`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

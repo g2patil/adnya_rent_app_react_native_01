@@ -4,7 +4,7 @@ import { UserContext } from './UserContext';
 import CookieManager from '@react-native-cookies/cookies';
 import DateTimePickerModal from 'react-native-modal-datetime-picker'; // Date picker package
 import DateTimePicker from '@react-native-community/datetimepicker';
-
+import config from './my_con';
 const OPDSearch = () => {
   const [searchParams, setSearchParams] = useState({
     fromDate: '',
@@ -15,7 +15,7 @@ const OPDSearch = () => {
   const { user_id } = useContext(UserContext);
   const [isFromDatePickerVisible, setFromDatePickerVisibility] = useState(false);
   const [isToDatePickerVisible, setToDatePickerVisibility] = useState(false);
-  const BASE_URL = 'http://192.168.1.114:8082'; // Adjust to your backend URL
+  const BASE_URL = `${config.BASE_URL}`; // Adjust to your backend URL
 
   // Date pickers
   const showFromDatePicker = () => setFromDatePickerVisibility(true);

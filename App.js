@@ -12,6 +12,7 @@ import Add_OPD_Form from './Add_OPD_Form';
 import Patient_Search from './PatientSearch';
 import Logout_Button from './LogoutButton';
 import OPDSearch from './OPDSearch';
+import MedCert from './issue_med_cert';
 
 const Stack = createStackNavigator();
 
@@ -28,6 +29,7 @@ const App = () => {
         <Stack.Screen name="Patient_Search" component={Patient_Search} />
         <Stack.Screen name="Logout_Button" component={Logout_Button} />
         <Stack.Screen name="OPDSearch" component={OPDSearch} />
+        <Stack.Screen name="Med_Cert" component={MedCert} />
       </Stack.Navigator>
     </NavigationContainer>
     </UserProvider>

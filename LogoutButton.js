@@ -2,14 +2,14 @@ import React, { useContext } from 'react';
 import { UserContext } from './UserContext';
 import { Button, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; // Import navigation hook
-
+import config from './my_con';
 const LogoutButton = () => {
   const { session_Id, logout } = useContext(UserContext);
   const navigation = useNavigation(); // Initialize navigation
 
   const handleLogout = async () => {
     try {
-      const response = await fetch('http://192.168.1.114:8082/adnya/logout', {
+      const response = await fetch(`${config.BASE_URL}/adnya/logout`, {
         method: 'GET', // or 'GET' depending on your API
         credentials: 'include',
         headers: {
@@ -56,7 +56,7 @@ const LogoutButton = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch('http://192.168.1.114:8082/adnya/logout', {
+      const response = await fetch( `${config.BASE_URL}/adnya/logout`, {
         method: 'POST', // or 'GET' depending on your API
         headers: {
           'Content-Type': 'application/json',

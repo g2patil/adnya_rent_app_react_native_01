@@ -3,7 +3,7 @@ import { StyleSheet, Text, Button, View, TextInput, Alert, ScrollView, Dimension
 import { Picker } from '@react-native-picker/picker'; // Import Picker component
 import DateTimePicker from '@react-native-community/datetimepicker'; // Import DateTimePicker component
 import { UserContext } from './UserContext';
-
+import config from './my_con';
 const Add_Patient_Form = ({ navigation,setUser_id }) => {
   const { user_id } = useContext(UserContext);
   const [firstName, setFirstName] = useState('');
@@ -53,7 +53,7 @@ const Add_Patient_Form = ({ navigation,setUser_id }) => {
       doctorId: user_id   ,
     };
    // console.log(""+JSON.stringify(dataToSend));
-    fetch('http://192.168.1.114:8082/adnya/register/patient', {
+    fetch(`${config.BASE_URL}/adnya/register/patient`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

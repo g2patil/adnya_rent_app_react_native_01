@@ -4,7 +4,7 @@ import { UserContext } from './UserContext';
 //import axios from 'axios';
 //import { UserContext } from './UserContext';
 import CookieManager from '@react-native-cookies/cookies';
-
+import config from './my_con'; 
 
 const PatientSearch = () => {
   const [searchParams, setSearchParams] = useState({
@@ -20,8 +20,8 @@ const PatientSearch = () => {
   const { session_Id } = useContext(UserContext);
   
   //////////////////
- // const BASE_URL = __DEV__ ?   'http://192.168.1.114:8082' :'http://10.0.2.2:3000'; // Use your backend URL
- const BASE_URL = 'http://192.168.1.114:8082';
+ // const BASE_URL = __DEV__ ?   `${config.BASE_URL}`:'http://10.0.2.2:3000'; // Use your backend URL
+ const BASE_URL =  `${config.BASE_URL}`;
  const { user_id } = useContext(UserContext); 
 const searchPatients = async (searchParams) => {
   try {
