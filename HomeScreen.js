@@ -5,11 +5,11 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 export default HomeScreen = ({ navigation }) => {
   const options = [
-    { id: 0, title: 'Add Patient', source: require('./assets/patient.png'), path: 'Add_Patient' },
-    { id: 1, title: 'Search Patient', source: require('./assets/search_patient.png'), path :'Patient_Search' },
-    { id: 2, title: 'Create OPD', source: require('./assets/opd.png'), path: 'Add_Opd'  },
-    { id: 3, title: 'OPD Statistics', source: require('./assets/search.png'),path:'OPDSearch' },
-    { id: 4, title: ' Issue Medical Cretificate', source: require('./assets/medical_certificate.png'),path:'Med_Cert' },
+    { id: 0, title: 'Practise', source: require('./assets/exam_practise.png'), path: 'Practise' },
+    { id: 1, title: 'Test', source: require('./assets/exam_test.png'), path :'Quiz' },
+    { id: 2, title: 'Report', source: require('./assets/exam_report.png'), path: 'Add_Opd'  },
+    { id: 3, title: 'Progress', source: require('./assets/exam_progress.png'),path:'OPDSearch' },
+    { id: 4, title: 'Cretificate', source: require('./assets/medical_certificate.png'),path:'Med_Cert' },
     { id: 5, title: 'Logout', source: require('./assets/logout.png') , path :'Logout_Button'  },
   ];
 

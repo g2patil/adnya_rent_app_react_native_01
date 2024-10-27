@@ -7,7 +7,6 @@ import CookieManager from '@react-native-cookies/cookies';
 import {Image,
 
   TouchableOpacity,StyleSheet, View, Text, Button 		,  TextInput} from 'react-native';
-import CreateBldg from "./CreateBldg";
 import { UserContext } from './UserContext';
 
 const LoginScreen = ({ navigation }) => {
