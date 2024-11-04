@@ -1,4 +1,4 @@
-package com.adnya_rent_proj
+package com.adnya_exam_app
 
 import android.app.Application
 import com.facebook.react.PackageList

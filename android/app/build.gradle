@@ -74,9 +74,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.adnya_rent_proj"
+    namespace "com.adnya_exam_app"
     defaultConfig {
-        applicationId "com.adnya_rent_proj"
+        applicationId "com.adnya_exam_app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

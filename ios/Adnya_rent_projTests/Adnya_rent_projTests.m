@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface Adnya_rent_projTests : XCTestCase
+@interface adnya_exam_appTests : XCTestCase
 
 @end
 
-@implementation Adnya_rent_projTests
+@implementation adnya_exam_appTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL (^)(UIView *view))test
 {

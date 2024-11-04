@@ -25,7 +25,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'Adnya_rent_proj' do
+target 'adnya_exam_app' do
   config = use_native_modules!
 
   use_react_native!(
@@ -39,7 +39,7 @@ target 'Adnya_rent_proj' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'Adnya_rent_projTests' do
+  target 'adnya_exam_appTests' do
     inherit! :complete
     # Pods for testing
   end
