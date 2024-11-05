@@ -9,7 +9,7 @@ export default HomeScreen = ({ navigation }) => {
     { id: 1, title: 'Test', source: require('./assets/exam_test.png'), path :'Quiz' },
     { id: 2, title: 'Report', source: require('./assets/exam_report.png'), path: 'Add_Opd'  },
     { id: 3, title: 'Progress', source: require('./assets/exam_progress.png'),path:'OPDSearch' },
-    { id: 4, title: 'Cretificate', source: require('./assets/medical_certificate.png'),path:'Med_Cert' },
+    { id: 4, title: 'Cretificate', source: require('./assets/medical_certificate.png'),path:'Pdf_cert' },
     { id: 5, title: 'Logout', source: require('./assets/logout.png') , path :'Logout_Button'  },
   ];
 

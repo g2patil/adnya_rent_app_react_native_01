@@ -8,6 +8,7 @@ import { UserProvider } from './UserContext';
 import Logout_Button from './LogoutButton';
 import Practise from './Practise';
 import Quiz from './Quiz';
+import Pdf_cert from './Pdf_cert';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,7 @@ const App = () => {
         <Stack.Screen name="Logout_Button" component={Logout_Button} />
         <Stack.Screen name="Practise" component={Practise} />
         <Stack.Screen name="Quiz" component={Quiz} />
+        <Stack.Screen name="Pdf_cert" component={Pdf_cert} />
          </Stack.Navigator>
     </NavigationContainer>
     </UserProvider>
