@@ -10,6 +10,7 @@ import Practise from './Practise';
 import Quiz from './Quiz';
 import Pdf_cert from './Pdf_cert';
 import PDFViewer from './PDFViewer';
+import Register_club_member from './Register_club_member';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,7 @@ const App = () => {
         <Stack.Screen name="Quiz" component={Quiz} />
         <Stack.Screen name="Pdf_cert" component={Pdf_cert} />
         <Stack.Screen name="PDFViewer" component={PDFViewer} />
+        <Stack.Screen name="Register_club_member" component={Register_club_member} />
          </Stack.Navigator>
     </NavigationContainer>
     </UserProvider>

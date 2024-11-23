@@ -76,7 +76,8 @@ android {
 
     namespace "com.adnya_exam_app"
     defaultConfig {
-        applicationId "com.adnya_exam_app"
+        //applicationId "com.adnya_exam_app"
+        applicationId "com.club_house_mgmt"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

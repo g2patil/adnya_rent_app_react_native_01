@@ -5,12 +5,15 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 export default HomeScreen = ({ navigation }) => {
   const options = [
-    { id: 0, title: 'Practise', source: require('./assets/exam_practise.png'), path: 'Practise' },
-    { id: 1, title: 'Test', source: require('./assets/exam_test.png'), path :'Quiz' },
-    { id: 2, title: 'Report', source: require('./assets/exam_report.png'), path: 'Add_Opd'  },
-    { id: 3, title: 'Progress', source: require('./assets/exam_progress.png'),path:'OPDSearch' },
-    { id: 4, title: 'Cretificate', source: require('./assets/medical_certificate.png'),path:'Pdf_cert' },
-    { id: 5, title: 'Logout', source: require('./assets/logout.png') , path :'Logout_Button'  },
+    { id: 0, title: '', source: require('./assets/dashboard_inactive.png'), path: 'Practise' },
+    { id: 1, title: '', source: require('./assets/member_inactive.png'), path :'Register_club_member' },
+    { id: 2, title: '', source: require('./assets/event_inactive.png'), path: 'Add_Opd'  },
+    { id: 3, title: '', source: require('./assets/announcement_inactive.png'),path:'OPDSearch' },
+    { id: 4, title: '', source: require('./assets/clubresources_inactive.png'),path:'Pdf_cert' },
+    { id: 5, title: '', source: require('./assets/messages_inactive.png'),path:'Pdf_cert' },
+    { id: 6, title: '', source: require('./assets/paymentsbilling_inactive.png'),path:'Pdf_cert' },
+    { id: 7, title: '', source: require('./assets/adminpanel_inactive.png'),path:'Pdf_cert' },
+    { id: 8, title: 'Logout', source: require('./assets/logout_inactive.png') , path :'Logout_Button'  },
   ];
 
   const clickEventListener = (item) => {
@@ -49,12 +52,12 @@ export default HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 40,
-    backgroundColor: '#f6f6f6',
+    marginTop: 50,
+    backgroundColor: '#ffffff',
   },
   list: {
     paddingHorizontal: 5,
-    backgroundColor: '#f6f6f6',
+    backgroundColor: '#ffffff',
   },
   listContainer: {
     alignItems: 'center',
@@ -68,18 +71,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.37,
     shadowRadius: 7.49,
     elevation: 12,
-    marginVertical: 20,
-    marginHorizontal: 40,
-    backgroundColor: '#e2e2e2',
-    width: 120,
-    height: 120,
+    marginVertical: 10,
+    marginHorizontal: 60,
+    backgroundColor: '#ffffff', //e2e2e2
+    width: 90,
+    height: 90,
     borderRadius: 60,
     alignItems: 'center',
     justifyContent: 'center',
   },
   cardHeader: {
-    paddingVertical: 17,
-    paddingHorizontal: 16,
+    paddingVertical: 2,
+    paddingHorizontal: 2,
     borderTopLeftRadius: 1,
     borderTopRightRadius: 1,
     flexDirection: 'row',
@@ -87,8 +90,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cardImage: {
-    height: 100,
-    width: 100,
+    height: 120,
+    width: 120,
     alignSelf: 'center',
   },
   title: {

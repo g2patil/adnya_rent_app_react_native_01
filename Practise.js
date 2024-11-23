@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {TouchableOpacity,   View, Text, StyleSheet, ActivityIndicator, Alert, Button, FlatList } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-
+import config from './my_con';
 const Practise = () => {
   const [topics, setTopics] = useState([]);
   const [subTopics, setSubTopics] = useState([]);
@@ -18,7 +18,8 @@ const Practise = () => {
 
   const fetchTopics = async () => {
     try {
-      const response = await fetch('http://192.168.1.114:8082/adnya/exam/get_m_topic');
+      //`${config.BASE_URL}/adnya
+      const response = await fetch(`${config.BASE_URL}/adnya/exam/get_m_topic`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -43,7 +44,7 @@ const Practise = () => {
       return;
     }
     try {
-      const response = await fetch(`http://192.168.1.114:8082/adnya/exam/get_s_topic/${topicId}`);
+      const response = await fetch(`${config.BASE_URL}/adnya/exam/get_s_topic/${topicId}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -70,7 +71,7 @@ const Practise = () => {
     setError(null);
 
     try {
-      const response = await fetch(`http://192.168.1.114:8082/adnya/exam/practise?mTopicId=${selectedTopic}&sTopicId=${selectedSubTopic}`);
+      const response = await fetch(`${config.BASE_URL}/adnya/exam/practise?mTopicId=${selectedTopic}&sTopicId=${selectedSubTopic}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
